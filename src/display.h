@@ -13,13 +13,14 @@ extern int window_width;
 extern int window_height;
 
 bool initilize_window(void);
-void drawRect(const unsigned int posx,
-              const unsigned int posy,
-              const unsigned int width,
-              const unsigned int height,
-              const uint32_t color);
+void draw_grid(void);
+void draw_pixel(const int x, const int y, uint32_t color);
+void draw_rect(const unsigned int posx,
+               const unsigned int posy,
+               const unsigned int width,
+               const unsigned int height,
+               const uint32_t color);
 
-void drawGrid(void);
 void render_color_buffer(void);
 void clear_color_buffer(uint32_t color);
 void destroy_window(void);

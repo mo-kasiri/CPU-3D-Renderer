@@ -3,7 +3,15 @@
 #include <stdbool.h>
 #include <SDL2/SDL.h>
 
+#include "vector.h"
 #include "display.h"
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+// Declare an array of vectors/points
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+const int N_POINTS = 9 * 9 * 9;
+vec3_t cube_points[N_POINTS]; // 9*9*9 cube
 
 bool is_running = false;
 
@@ -21,6 +29,23 @@ void setup(void)
 		0,
 		window_width,
 		window_height);
+
+	// Start loading my array of vectors
+	// From -1 to 1 (in this 9*9*9 cube)
+
+	int point_count = 0;
+
+	for (float x = -1.0; x <= 1.0; x += 0.25)
+	{
+		for (float y = -1.0; y <= 1.0; y += 0.25)
+		{
+			for (float z = -1.0; z <= 1.0; z += 0.25)
+			{
+				vec3_t new_point = {.x = x, .y = y, .z = z};
+				cube_points[point_count++] = new_point;
+			}
+		}
+	}
 }
 
 void process_input(void)
@@ -55,8 +80,9 @@ void render(void)
 
 	clear_color_buffer(0xFFFFFF00);
 
-	drawGrid();
-	drawRect(200, 100, 300, 300, 0xFFF0F0F0);
+	draw_grid();
+	draw_pixel(10, 10, 0xFFFF0000);
+	draw_rect(200, 100, 300, 300, 0xFFF0F0F0);
 
 	SDL_RenderPresent(renderer);
 }

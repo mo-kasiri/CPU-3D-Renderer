@@ -1,5 +1,5 @@
 # CPU Based 3D Rendering
-In this repo, I try to develope a simple (c based) 3D renderer, which works entirely on the CPU.
+In this repo, I try to develope a simple (based on C programming language and SDL library) 3D renderer, which works entirely on the CPU.
 
 ## Setup
 Install [MinGW](https://www.mingw-w64.org/downloads/).

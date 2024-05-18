@@ -58,7 +58,7 @@ bool initilize_window(void)
 	return true;
 }
 
-void drawRect(const unsigned int posx, const unsigned int posy, const unsigned int width, const unsigned int height, const uint32_t color)
+void draw_rect(const unsigned int posx, const unsigned int posy, const unsigned int width, const unsigned int height, const uint32_t color)
 {
 
 	for (unsigned int y = 0; y < window_height; y++)
@@ -71,7 +71,13 @@ void drawRect(const unsigned int posx, const unsigned int posy, const unsigned i
 	}
 }
 
-void drawGrid(void)
+void draw_pixel(const int x, const int y, uint32_t color)
+{
+	if (x < window_width && y < window_height)
+		color_buffer[(window_width * y) + x] = color;
+}
+
+void draw_grid(void)
 {
 	for (unsigned int y = 0; y < window_height; y++)
 	{
