@@ -16,7 +16,7 @@ int window_height = 600;
 bool initilize_window(void)
 {
 
-	if (SDL_Init(SDL_INIT_EVERYTHING != 0))
+	if (SDL_Init(SDL_INIT_EVERYTHING == -1))
 	{
 		fprintf(stderr, "Error initilazing SDL.\n");
 		return false;
@@ -26,11 +26,11 @@ bool initilize_window(void)
 	SDL_DisplayMode display_mode;
 	SDL_GetCurrentDisplayMode(0, &display_mode);
 
-	if (!display_mode.w && !display_mode.h)
-	{
-		window_width = display_mode.w;
-		window_height = display_mode.h;
-	}
+	// if (!display_mode.w && !display_mode.h)
+	// {
+	// 	window_width = display_mode.w;
+	// 	window_height = display_mode.h;
+	// }
 
 	printf("width: %d\n", window_width);
 	printf("height: %d\n", window_height);
@@ -55,7 +55,7 @@ bool initilize_window(void)
 
 	if (!renderer)
 	{
-		fprintf(stderr, "Error creating SDL renderer.\n");
+		fprintf(stderr, "Error creating SDL renderer. ", SDL_GetError(), " .\n");
 		return false;
 	}
 
@@ -64,10 +64,39 @@ bool initilize_window(void)
 	return true;
 }
 
+void drawRect(const unsigned int posx, const unsigned int posy, const unsigned int width, const unsigned int height, const uint32_t color)
+{
+
+	for (unsigned int y = 0; y < window_height; y++)
+	{
+		for (unsigned int x = 0; x < window_width; x++)
+		{
+			if (x >= posx && x <= posx + width && y >= posy && y <= posy + height)
+				color_buffer[(window_width * y) + x] = color;
+		}
+	}
+}
+
+void drawGrid(void)
+{
+	for (unsigned int y = 0; y < window_height; y++)
+	{
+		for (unsigned int x = 0; x < window_width; x++)
+		{
+			if (y % 20 == 0 || x % 20 == 0)
+			{
+				color_buffer[(window_width * y) + x] = 0xFF000000;
+			}
+		}
+	}
+}
+
 void setup(void)
 {
 	// Allocate the required memory in bytes to bold the color buffer
 	color_buffer = (uint32_t *)malloc(sizeof(uint32_t) * window_width * window_height);
+	if (color_buffer == NULL)
+		fprintf(stderr, "Error creating color buffer.\n");
 
 	// Creating a SDL texture that is used to display the color buffer
 	color_buffer_texture = SDL_CreateTexture(
@@ -76,9 +105,6 @@ void setup(void)
 		0,
 		window_width,
 		window_height);
-
-	if (!color_buffer)
-		fprintf(stderr, "Error creating color buffer.\n");
 }
 
 void process_input(void)
@@ -112,6 +138,8 @@ void render_color_buffer(void)
 		NULL,
 		color_buffer,
 		(int)(window_width * sizeof(uint32_t)));
+
+	// Copy a portion of the texture to the current rendering target.
 	SDL_RenderCopy(renderer, color_buffer_texture, NULL, NULL);
 }
 
@@ -136,6 +164,9 @@ void render(void)
 
 	uint32_t color = 0xFFFFFF00;
 	clear_color_buffer(&color);
+
+	drawGrid();
+	drawRect(200, 100, 300, 300, 0xFFF0F0F0);
 
 	SDL_RenderPresent(renderer);
 }
