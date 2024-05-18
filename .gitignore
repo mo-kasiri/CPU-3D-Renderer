@@ -1,2 +1,2 @@
-.vscode
-renderer
+.vscode/*
+/renderer
