@@ -6,6 +6,7 @@ uint32_t *color_buffer = NULL;
 SDL_Texture *color_buffer_texture = NULL;
 int window_width = 800;
 int window_height = 600;
+float ratio = 800.0 / 600.0;
 
 bool initilize_window(void)
 {
@@ -24,6 +25,7 @@ bool initilize_window(void)
 	{
 		window_width = display_mode.w;
 		window_height = display_mode.h;
+		ratio = window_width / window_height;
 	}
 
 	printf("width: %d\n", window_width);
@@ -58,23 +60,26 @@ bool initilize_window(void)
 	return true;
 }
 
+void draw_pixel(const int x, const int y, uint32_t color)
+{
+	if (x >= 0 && x < window_width && y >= 0 && y < window_height)
+		color_buffer[(window_width * y) + x] = color;
+}
+
 void draw_rect(const unsigned int posx, const unsigned int posy, const unsigned int width, const unsigned int height, const uint32_t color)
 {
 
-	for (unsigned int y = 0; y < window_height; y++)
+	for (unsigned int i = 0; i < width; i++)
 	{
-		for (unsigned int x = 0; x < window_width; x++)
+		for (unsigned int j = 0; j < height; j++)
 		{
-			if (x >= posx && x <= posx + width && y >= posy && y <= posy + height)
-				color_buffer[(window_width * y) + x] = color;
+			int current_x = posx + i;
+			int current_y = posy + j;
+			draw_pixel(current_x, current_y, color);
+			// if (x >= posx && x <= posx + width && y >= posy && y <= posy + height)
+			// color_buffer[(window_width * y) + x] = color;
 		}
 	}
-}
-
-void draw_pixel(const int x, const int y, uint32_t color)
-{
-	if (x < window_width && y < window_height)
-		color_buffer[(window_width * y) + x] = color;
 }
 
 void draw_grid(void)

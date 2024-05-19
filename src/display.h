@@ -11,6 +11,7 @@ extern uint32_t *color_buffer;
 extern SDL_Texture *color_buffer_texture;
 extern int window_width;
 extern int window_height;
+extern float ratio;
 
 bool initilize_window(void);
 void draw_grid(void);

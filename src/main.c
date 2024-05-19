@@ -6,12 +6,14 @@
 #include "vector.h"
 #include "display.h"
 
+#define N_POINTS 9 * 9 * 9
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 // Declare an array of vectors/points
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-
-const int N_POINTS = 9 * 9 * 9;
-vec3_t cube_points[N_POINTS]; // 9*9*9 cube
+float fov_factor = 128;
+vec3_t cube_points[N_POINTS]; // 9*9*9 cube (An array of structs)
+vec2_t projected_points[N_POINTS];
 
 bool is_running = false;
 
@@ -67,32 +69,71 @@ void process_input(void)
 	}
 }
 
+//////////////////////////////////////////////////////////////////////
+// Function that recives a 3D vector and returns a projected 2D point
+//////////////////////////////////////////////////////////////////////
+vec2_t project(vec3_t point)
+{
+	vec2_t projected_point = {
+		.x = (fov_factor * point.x),  // ranging from -128 to 128
+		.y = (fov_factor * point.y)}; // ranging from -128 to 128
+
+	return projected_point;
+}
+
+void create2dPoints(void)
+{
+	for (int i = 0; i < N_POINTS; i++)
+	{
+		vec3_t point = cube_points[i];
+
+		// Project the current point (read them one by one)
+		vec2_t projected_point = project(point);
+
+		// Save the projectd 2D vector in the array of projected points
+		projected_points[i] = projected_point;
+	}
+}
+
 void update(void)
 {
 }
 
 void render(void)
 {
-	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-	SDL_RenderClear(renderer);
+	// draw_grid();
+
+	// Loop all projectd points and render then
+	printf("width: %d\n", window_width);
+	printf("height: %d\n", window_height);
+	for (int i = 0; i < N_POINTS; i++)
+	{
+		vec2_t projected_point = projected_points[i];
+		draw_rect(
+			projected_point.x + (window_width / 2),
+			projected_point.y + (window_height / 2),
+			4,
+			4,
+			0xFFFF0000);
+	}
 
 	render_color_buffer();
-
 	clear_color_buffer(0xFFFFFF00);
 
-	draw_grid();
-	draw_pixel(10, 10, 0xFFFF0000);
-	draw_rect(200, 100, 300, 300, 0xFFF0F0F0);
+	// draw_pixel(10, 10, 0xFFFF0000);
+	// draw_rect(200, 100, 300, 300, 0xFFF0F0F0);
 
 	SDL_RenderPresent(renderer);
 }
 
 int main(void)
 {
+	printf("size: %ld\n", sizeof(cube_points));
 	/* Crate a SDL window */
 	is_running = initilize_window();
 
 	setup();
+	create2dPoints();
 
 	while (is_running)
 	{
