@@ -11,7 +11,8 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 // Declare an array of vectors/points
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-float fov_factor = 128;
+vec3_t camera_position = {.x = 0, .y = 0, .z = -3};
+float fov_factor = 640;
 vec3_t cube_points[N_POINTS]; // 9*9*9 cube (An array of structs)
 vec2_t projected_points[N_POINTS];
 
@@ -75,8 +76,8 @@ void process_input(void)
 vec2_t project(vec3_t point)
 {
 	vec2_t projected_point = {
-		.x = (fov_factor * point.x),  // ranging from -128 to 128
-		.y = (fov_factor * point.y)}; // ranging from -128 to 128
+		.x = fov_factor * point.x / point.z,  // ranging from -128 to 128
+		.y = fov_factor * point.y / point.z}; // ranging from -128 to 128
 
 	return projected_point;
 }
@@ -86,6 +87,9 @@ void create2dPoints(void)
 	for (int i = 0; i < N_POINTS; i++)
 	{
 		vec3_t point = cube_points[i];
+
+		// Move the points away from the camera
+		point.z -= camera_position.z;
 
 		// Project the current point (read them one by one)
 		vec2_t projected_point = project(point);
@@ -101,24 +105,26 @@ void update(void)
 
 void render(void)
 {
-	// draw_grid();
+	draw_grid();
 
 	// Loop all projectd points and render then
 	printf("width: %d\n", window_width);
 	printf("height: %d\n", window_height);
+
+	// For loop for drawing rectangles
 	for (int i = 0; i < N_POINTS; i++)
 	{
 		vec2_t projected_point = projected_points[i];
 		draw_rect(
 			projected_point.x + (window_width / 2),
 			projected_point.y + (window_height / 2),
-			4,
-			4,
-			0xFFFF0000);
+			-4 * (cube_points[i].z - 2),
+			-4 * (cube_points[i].z - 2),
+			0xFFFFFF00);
 	}
 
 	render_color_buffer();
-	clear_color_buffer(0xFFFFFF00);
+	clear_color_buffer(0xFF399145);
 
 	// draw_pixel(10, 10, 0xFFFF0000);
 	// draw_rect(200, 100, 300, 300, 0xFFF0F0F0);

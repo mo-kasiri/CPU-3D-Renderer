@@ -4,9 +4,8 @@ SDL_Window *window = NULL;
 SDL_Renderer *renderer = NULL;
 uint32_t *color_buffer = NULL;
 SDL_Texture *color_buffer_texture = NULL;
-int window_width = 800;
-int window_height = 600;
-float ratio = 800.0 / 600.0;
+int window_width = 1920;
+int window_height = 1080;
 
 bool initilize_window(void)
 {
@@ -25,7 +24,7 @@ bool initilize_window(void)
 	{
 		window_width = display_mode.w;
 		window_height = display_mode.h;
-		ratio = window_width / window_height;
+		// ratio = window_width / window_height;
 	}
 
 	printf("width: %d\n", window_width);
@@ -88,9 +87,9 @@ void draw_grid(void)
 	{
 		for (unsigned int x = 0; x < window_width; x++)
 		{
-			if (y % 20 == 0 || x % 20 == 0)
+			if (y % 20 == 0 && x % 20 == 0)
 			{
-				color_buffer[(window_width * y) + x] = 0;
+				color_buffer[(window_width * y) + x] = 0xFF333333;
 			}
 		}
 	}
