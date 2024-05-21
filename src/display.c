@@ -9,7 +9,7 @@ int window_height = 1080;
 
 bool initilize_window(void)
 {
-
+	SDL_Init(SDL_INIT_VIDEO);
 	if (SDL_Init(SDL_INIT_EVERYTHING == -1))
 	{
 		fprintf(stderr, "Error initilazing SDL.\n");
@@ -17,14 +17,45 @@ bool initilize_window(void)
 	}
 
 	// Use SDL to query what is the fullscreen max. width and height
-	SDL_DisplayMode display_mode;
-	SDL_GetCurrentDisplayMode(0, &display_mode);
-
-	if (!display_mode.w && !display_mode.h)
+	if (SDL_GetNumVideoDisplays() > 0)
 	{
-		window_width = display_mode.w;
-		window_height = display_mode.h;
-		// ratio = window_width / window_height;
+		static int display_in_use = 0; /* Only using first display */
+
+		int i, display_mode_count;
+		SDL_DisplayMode mode;
+		SDL_DisplayMode *modes = (SDL_DisplayMode *)malloc(sizeof(SDL_DisplayMode) * SDL_GetNumDisplayModes(display_in_use));
+		Uint32 f;
+
+		SDL_Log("SDL_GetNumVideoDisplays(): %i", SDL_GetNumVideoDisplays());
+
+		display_mode_count = SDL_GetNumDisplayModes(display_in_use);
+
+		SDL_Log("SDL_GetNumDisplayModes: %i", display_mode_count);
+
+		for (i = 0; i < display_mode_count; ++i)
+		{
+			if (SDL_GetDisplayMode(display_in_use, i, &mode) != 0)
+			{
+				SDL_Log("SDL_GetDisplayMode failed: %s", SDL_GetError());
+				return 1;
+			}
+			f = mode.format;
+			modes[i] = mode;
+
+			SDL_Log("Mode %i\tbits per pixel %i\t%s\t%i x %i",
+					i, SDL_BITSPERPIXEL(f),
+					SDL_GetPixelFormatName(f),
+					mode.w, mode.h);
+		}
+		window_width = modes[0].w;
+		window_height = modes[0].h;
+
+		free(modes);
+	}
+	else
+	{
+		SDL_Log("SDL_GetNumDisplayModes failed: %s", SDL_GetError());
+		return 1;
 	}
 
 	printf("width: %d\n", window_width);

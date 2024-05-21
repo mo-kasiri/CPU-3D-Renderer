@@ -108,8 +108,8 @@ void render(void)
 	draw_grid();
 
 	// Loop all projectd points and render then
-	printf("width: %d\n", window_width);
-	printf("height: %d\n", window_height);
+	// printf("width: %d\n", window_width);
+	// printf("height: %d\n", window_height);
 
 	// For loop for drawing rectangles
 	for (int i = 0; i < N_POINTS; i++)
@@ -134,7 +134,7 @@ void render(void)
 
 int main(void)
 {
-	printf("size: %ld\n", sizeof(cube_points));
+	// printf("size: %ld\n", sizeof(cube_points));
 	/* Crate a SDL window */
 	is_running = initilize_window();
 
