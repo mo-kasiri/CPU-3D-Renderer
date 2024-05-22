@@ -18,6 +18,7 @@ vec3_t cube_points[N_POINTS]; // 9*9*9 cube (An array of structs)
 vec2_t projected_points[N_POINTS];
 
 bool is_running = false;
+int previous_frame_time = 0;
 
 void setup(void)
 {
@@ -83,7 +84,7 @@ vec2_t project(vec3_t point)
 	return projected_point;
 }
 
-void create2dPoints(void)
+void drawCube(void)
 {
 	cube_rotation.x += 0.02;
 	cube_rotation.y += 0.02;
@@ -118,7 +119,18 @@ void create2dPoints(void)
 
 void update(void)
 {
-	create2dPoints();
+	// Wait some time untill reach the target frame time in milliseconds
+	int time_to_wait = FRAME_TARGET_TIME - (SDL_GetTicks() - previous_frame_time);
+
+	// Only delay execuation if we are running too fast
+	if (time_to_wait > 0 && time_to_wait <= FRAME_TARGET_TIME)
+	{
+		SDL_Delay(time_to_wait);
+	}
+	// How many milli seconds has passed since the last frame
+	previous_frame_time = SDL_GetTicks(); // Started since SDL_Init
+
+	drawCube();
 }
 
 void render(void)
