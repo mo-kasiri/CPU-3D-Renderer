@@ -6,7 +6,7 @@
 #include <SDL2/SDL.h>
 
 #define FPS 30
-#define FRAME_TARGET_TIME (1000 / FPS) // The desired Delta
+#define FRAME_TARGET_TIME (1000 / FPS) // The Constant Delta
 
 extern SDL_Window *window;
 extern SDL_Renderer *renderer;
