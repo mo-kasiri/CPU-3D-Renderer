@@ -24,6 +24,7 @@ void draw_rect(const unsigned int posx,
                const unsigned int width,
                const unsigned int height,
                const uint32_t color);
+void draw_line(const int x0, const int y0, const int x1, const int y1, const uint32_t color);
 
 void render_color_buffer(void);
 void clear_color_buffer(uint32_t color);

@@ -1,4 +1,5 @@
 #include "display.h"
+#include <SDL2/SDL_ttf.h>
 
 SDL_Window *window = NULL;
 SDL_Renderer *renderer = NULL;
@@ -124,6 +125,25 @@ void draw_grid(void)
 			}
 		}
 	}
+}
+
+void write_text(void)
+{
+	TTF_Init();
+	TTF_Font *font = TTF_OpenFont("Ubuntu-B.ttf", 15);
+	if (font == NULL)
+		printf("Font loading faild: %s\n", TTF_GetError());
+
+	SDL_Surface *TextSurface = TTF_RenderText_Blended_Wrapped(font, "Frame rate is set to 60", (SDL_Color){255, 255, 255, 255}, 500);
+	if (TextSurface == NULL)
+		printf("Surface creation faild: %s\n", TTF_GetError());
+
+	SDL_Texture *TextTexture = SDL_CreateTextureFromSurface(renderer, TextSurface);
+	if (TextTexture == NULL)
+		printf("Texture creation faild: %s\n", TTF_GetError());
+
+	SDL_RenderCopy(renderer, TextTexture, NULL, &(SDL_Rect){200 / 2 - TextSurface->w / 2, 100 / 2 - TextSurface->h / 2, TextSurface->w, TextSurface->h});
+	SDL_RenderPresent(renderer);
 }
 
 void render_color_buffer(void)
