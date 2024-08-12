@@ -12,6 +12,7 @@ Run this followed commands:
 # Install SDL2 library
 sudo apt install build-essential
 sudo apt install libsdl2-dev
+sudo apt-get install libsdl2-ttf-dev
 
 # Compiling the project on your computer
 make

@@ -134,7 +134,7 @@ void update(void)
 	previous_frame_time = SDL_GetTicks(); // Started since SDL_Init
 
 	drawCube();
-	text();
+	// text();
 }
 
 void render(void)
