@@ -86,13 +86,20 @@ bool initialize_window(void)
     return true;
 }
 
+void draw_pixel(const int x, const int y, const uint32_t color)
+{
+    if (x < window_width && y < window_height)
+        color_buffer[(window_width * y) + x] = color;
+}
+
 void clear_color_buffer(uint32_t color)
 {
     for (int y = 0; y < window_height; y++)
     {
         for (int x = 0; x < window_width; x++)
         {
-            color_buffer[window_width * y + x] = color;
+            // color_buffer[window_width * y + x] = color;
+            draw_pixel(x, y, color);
         }
     }
 }
@@ -103,8 +110,9 @@ void draw_grid(const unsigned int size)
     {
         for (int j = 0; j < window_height; j++)
         {
-            if (i % size == 0 || i % size == 1 || j % size == 0 || j % size == 1)
-                color_buffer[window_width * j + i] = 0xFF555555;
+            if (i % size == 0 && j % size == 0)
+                // color_buffer[window_width * j + i] = 0xFF555555;
+                draw_pixel(i, j, 0xFF555555);
         }
     }
 }
@@ -115,7 +123,8 @@ void draw_rectangle(const int x, const int y, const unsigned int width, const un
     {
         for (int j = 0; j <= width; j++)
         {
-            color_buffer[(i + y) * window_width + (j + x)] = color;
+            // color_buffer[(i + y) * window_width + (j + x)] = color;
+            draw_pixel(j + x, i + y, color);
         }
     }
 }

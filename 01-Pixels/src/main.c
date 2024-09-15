@@ -72,8 +72,8 @@ void render(void)
     SDL_RenderClear(renderer);
 
     clear_color_buffer(0xFFFFFF00);
-
-    draw_grid(100);
+    draw_pixel(10, 10, 0xFFFFFFFF);
+    draw_grid(10);
     draw_rectangle(100, 200, 100, 200, 0xFFFF0000);
 
     render_color_buffer();

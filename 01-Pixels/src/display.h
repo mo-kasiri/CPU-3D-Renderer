@@ -17,6 +17,7 @@ extern unsigned int window_height;
 
 bool initialize_window(void);
 void draw_grid(const unsigned int size);
+void draw_pixel(const int x, const int y, const uint32_t color);
 void draw_rectangle(const int x, const int y, const unsigned int width, const unsigned int height, const u_int32_t color);
 
 void render_color_buffer(void);
