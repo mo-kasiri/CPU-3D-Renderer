@@ -8,6 +8,9 @@ SDL_Texture *color_buffer_texture = NULL;
 int window_width = 1920;
 int window_height = 1080;
 
+float delta_time = 0.f;
+TTF_Font *font = NULL;
+
 bool initilize_window(void)
 {
 	SDL_Init(SDL_INIT_VIDEO);
@@ -127,14 +130,19 @@ void draw_grid(void)
 	}
 }
 
-void write_text(void)
+void load_font(void)
 {
 	TTF_Init();
-	TTF_Font *font = TTF_OpenFont("Ubuntu-B.ttf", 15);
+	font = TTF_OpenFont("Ubuntu-B.ttf", 15);
 	if (font == NULL)
 		printf("Font loading faild: %s\n", TTF_GetError());
+}
 
-	SDL_Surface *TextSurface = TTF_RenderText_Blended_Wrapped(font, "Frame rate is set to 60", (SDL_Color){255, 255, 255, 255}, 500);
+void write_text(void)
+{
+	char buffer[32];
+	snprintf(buffer, sizeof(buffer), "Delta Time: %.4f", delta_time);
+	SDL_Surface *TextSurface = TTF_RenderText_Blended_Wrapped(font, buffer, (SDL_Color){255, 255, 255, 255}, 500);
 	if (TextSurface == NULL)
 		printf("Surface creation faild: %s\n", TTF_GetError());
 
@@ -142,8 +150,13 @@ void write_text(void)
 	if (TextTexture == NULL)
 		printf("Texture creation faild: %s\n", TTF_GetError());
 
-	SDL_RenderCopy(renderer, TextTexture, NULL, &(SDL_Rect){200 / 2 - TextSurface->w / 2, 100 / 2 - TextSurface->h / 2, TextSurface->w, TextSurface->h});
-	SDL_RenderPresent(renderer);
+	SDL_FreeSurface(TextSurface);
+
+	SDL_RenderCopy(
+		renderer,
+		TextTexture,
+		NULL,
+		&(SDL_Rect){10, 10, TextSurface->w, TextSurface->h}); // Creating an SDL_Rect
 }
 
 void render_color_buffer(void)

@@ -8,6 +8,7 @@
 #define FPS 30
 #define FRAME_TARGET_TIME (1000 / FPS) // The Constant Delta
 
+extern float delta_time;
 extern SDL_Window *window;
 extern SDL_Renderer *renderer;
 extern uint32_t *color_buffer;
@@ -24,6 +25,7 @@ void draw_rect(const unsigned int posx,
                const unsigned int width,
                const unsigned int height,
                const uint32_t color);
+void load_font(void);
 void write_text(void);
 
 void render_color_buffer(void);

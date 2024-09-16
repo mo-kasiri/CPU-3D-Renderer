@@ -25,6 +25,7 @@ int previous_frame_time = 0;
 
 void setup(void)
 {
+	load_font();
 	// Allocate the required memory in bytes to bold the color buffer
 	color_buffer = (uint32_t *)malloc(sizeof(uint32_t) * window_width * window_height);
 	if (color_buffer == NULL)
@@ -124,6 +125,8 @@ void update(void)
 {
 	// Wait some time untill reach the target frame time in milliseconds
 	int time_to_wait = FRAME_TARGET_TIME - (SDL_GetTicks() - previous_frame_time);
+	delta_time = (SDL_GetTicks() - previous_frame_time) / 1000.0;
+	// printf("delta time: %f\n", delta_time);
 
 	// Only delay execuation if we are running too fast
 	if (time_to_wait > 0 && time_to_wait <= FRAME_TARGET_TIME)
@@ -132,45 +135,23 @@ void update(void)
 	}
 	// How many milli seconds has passed since the last frame
 	previous_frame_time = SDL_GetTicks(); // Started since SDL_Init
+	// delta_time = previous_frame_time;
 
 	drawCube();
-	// text();
 }
 
 void render(void)
 {
 	draw_grid();
 
-	// Loop all projectd points and render then
-	// printf("width: %d\n", window_width);
-	// printf("height: %d\n", window_height);
-
-	// For loop for drawing rectangles
-	// for (int i = 0; i < N_POINTS; i++)
-	// {
-	// 	vec2_t projected_point = projected_points[i];
-	// 	draw_rect(
-	// 		projected_point.x + (window_width / 2),
-	// 		projected_point.y + (window_height / 2),
-	// 		-4 * (cube_points[i].z - 2),
-	// 		-4 * (cube_points[i].z - 2),
-	// 		// 4,
-	// 		// 4,
-	// 		0xFFFFFF00);
-	// }
-
 	render_color_buffer();
 	clear_color_buffer(0xFF399145);
-
-	// draw_pixel(10, 10, 0xFFFF0000);
-	// draw_rect(200, 100, 300, 300, 0xFFF0F0F0);
-
+	write_text();
 	SDL_RenderPresent(renderer);
 }
 
 int main(void)
 {
-	// printf("size: %ld\n", sizeof(cube_points));
 	/* Crate a SDL window */
 	is_running = initilize_window();
 
