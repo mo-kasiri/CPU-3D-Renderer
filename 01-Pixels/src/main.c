@@ -11,7 +11,9 @@
 vec3_t cube_points[N_POINTS];
 vec2_t projected_points[N_POINTS];
 
-const float fov_scale = 128.f;
+vec3_t camera_position = {.x = 0, .y = 0, .z = -5};
+
+const float fov_scale = 640.f;
 
 bool is_running = false;
 
@@ -90,8 +92,8 @@ void render_color_buffer(void)
 vec2_t project(vec3_t point)
 {
     vec2_t projected_point = {
-        .x = (fov_scale * point.x),
-        .y = (fov_scale * point.y)};
+        .x = (fov_scale * point.x) / point.z,  // / point.z,
+        .y = (fov_scale * point.y) / point.z}; // / point.z};
     return projected_point;
 }
 
@@ -100,6 +102,9 @@ void update(void)
     for (int i = 0; i < N_POINTS; i++)
     {
         vec3_t point = cube_points[i];
+
+        point.z -= camera_position.z;
+
         projected_points[i] = project(point);
     }
 }
