@@ -23,6 +23,7 @@ int previous_frame_time = 0;
 
 void setup(void)
 {
+	load_font();
 	// Allocate the required memory in bytes to bold the color buffer
 	color_buffer = (uint32_t *)malloc(sizeof(uint32_t) * window_width * window_height);
 	if (color_buffer == NULL)
@@ -86,7 +87,7 @@ void drawCube(void)
 
 		triangle_t projected_triangle;
 
-		// Loop all three vertices of this current face and apply transformation
+		// Loop all three vertices of this current face and apply transformations
 		for (int j = 0; j < 3; j++)
 		{
 			vec3_t transformed_vertex = face_vertices[j];
@@ -107,7 +108,7 @@ void drawCube(void)
 
 			projected_triangle.points[j] = projected_point;
 		}
-		// save the projeted triangle in the array of triangles to render
+		// Save the projeted triangle in the array of triangles to render
 		triangles_to_render[i] = projected_triangle;
 	}
 }
@@ -116,6 +117,7 @@ void update(void)
 {
 	// Wait some time untill reach the target frame time in milliseconds
 	int time_to_wait = FRAME_TARGET_TIME - (SDL_GetTicks() - previous_frame_time);
+	delta_time = (SDL_GetTicks() - previous_frame_time) / 1000.0;
 
 	// Only delay execuation if we are running too fast
 	if (time_to_wait > 0 && time_to_wait <= FRAME_TARGET_TIME)
@@ -132,21 +134,21 @@ void render(void)
 {
 	draw_grid();
 
-	// Loop all projectd points and render then
-	// printf("width: %d\n", window_width);
-	// printf("height: %d\n", window_height);
-
-	// For loop for drawing rectangles and render them
+	// For loop for drawing triangles and render them
 	for (int i = 0; i < N_MESH_FACES; i++)
 	{
-		triangle_t triangle = triangles_to_render[i];
-		draw_rect(triangle.points[0].x, triangle.points[0].y, 3, 3, 0xFFFFFF00);
-		draw_rect(triangle.points[1].x, triangle.points[1].y, 3, 3, 0xFFFFFF00);
-		draw_rect(triangle.points[2].x, triangle.points[2].y, 3, 3, 0xFFFFFF00);
+		triangle_t triangle = triangles_to_render[i]; // we have 12 triangles to render
+		draw_rect(triangle.points[0].x, triangle.points[0].y, 5, 5, 0xFFFFFF00);
+		draw_rect(triangle.points[1].x, triangle.points[1].y, 5, 5, 0xFFFFFF00);
+		draw_rect(triangle.points[2].x, triangle.points[2].y, 5, 5, 0xFFFFFF00);
+		// draw_line(triangle.points[0].x, triangle.points[0].y, triangle.points[1].x, triangle.points[1].y, 0xFF);
+		// draw_line(triangle.points[1].x, triangle.points[1].y, triangle.points[2].x, triangle.points[2].y, 0xFF);
+		// draw_line(triangle.points[2].x, triangle.points[2].y, triangle.points[0].x, triangle.points[0].y, 0xFF);
 	}
 
 	render_color_buffer();
 	clear_color_buffer(0xFF399145);
+	write_text();
 
 	// draw_pixel(10, 10, 0xFFFF0000);
 	// draw_rect(200, 100, 300, 300, 0xFFF0F0F0);

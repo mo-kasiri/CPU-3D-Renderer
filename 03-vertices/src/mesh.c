@@ -2,6 +2,7 @@
 
 // TODO: Create implementation for mesh.h functions
 
+// Vertice's position
 vec3_t mesh_vertices[N_MESH_VERTICES] = {
     {.x = -1, .y = -1, .z = -1}, // 1
     {.x = -1, .y = 1, .z = -1},  // 2
@@ -13,10 +14,11 @@ vec3_t mesh_vertices[N_MESH_VERTICES] = {
     {.x = -1, .y = -1, .z = 1}   // 8
 };
 
+// Points of the triangles
 face_t mesh_faces[N_MESH_FACES] = {
     // front
-    {.a = 1, .b = 2, .c = 3},
-    {.a = 1, .b = 3, .c = 4},
+    {.a = 1, .b = 2, .c = 3}, // triangle 1 of rect 1
+    {.a = 1, .b = 3, .c = 4}, // triangle 2 of rect 1
 
     // right
     {.a = 4, .b = 3, .c = 5},
@@ -39,3 +41,13 @@ face_t mesh_faces[N_MESH_FACES] = {
     {.a = 6, .b = 1, .c = 4}
 
 };
+
+// points of a cube from houdini
+/*0.5	-0.5	0.5
+-0.5	-0.5	0.5
+0.5	0.5	0.5
+-0.5	0.5	0.5
+-0.5	-0.5	-0.5
+0.5	-0.5	-0.5
+-0.5	0.5	-0.5
+0.5	0.5	-0.5*/
