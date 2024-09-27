@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <stdint.h>
 #include <stdbool.h>
 #include <SDL2/SDL.h>
@@ -15,7 +14,7 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 triangle_t *triangles_to_render = NULL;
 
-vec3_t camera_position = {.x = 0, .y = 0, .z = -5};
+vec3_t camera_position = {.x = 0, .y = 0, .z = -8};
 
 float fov_factor = 640;
 
@@ -38,7 +37,8 @@ void setup(void)
 		window_height);
 
 	// Loads the cube values in the mesh data structure
-	load_cube_mesh_data();
+	// load_cube_mesh_data();
+	load_obj_file_data("./assets/icosphere.obj");
 }
 
 void process_input(void)
@@ -72,7 +72,7 @@ vec2_t project(vec3_t point)
 	return projected_point;
 }
 
-void drawCube(void)
+void draw_mesh(void)
 {
 	// Initialize the array of triangles to render
 	triangles_to_render = NULL;
@@ -82,7 +82,7 @@ void drawCube(void)
 	mesh.rotation.z += 0.02;
 
 	// Loop all triangle faces of our mesh
-	for (int i = 0; i < array_length(mesh.vertices); i++)
+	for (int i = 0; i < array_length(mesh.faces); i++)
 	{
 		face_t mesh_face = mesh.faces[i];
 
@@ -133,14 +133,14 @@ void update(void)
 	// How many milli seconds has passed since the last frame
 	previous_frame_time = SDL_GetTicks(); // Started since SDL_Init
 
-	drawCube();
+	draw_mesh();
 }
 
 void render(void)
 {
 	draw_grid();
-
-	// For loop drawing triangles' points, lines and render them
+	// printf("Triangles to render count: %d\n", array_length(triangles_to_render));
+	//  For loop drawing triangles' points, lines and render them
 	for (int i = 0; i < array_length(triangles_to_render); i++)
 	{
 		triangle_t triangle = triangles_to_render[i];
@@ -161,8 +161,6 @@ void render(void)
 
 	// Clear the array of triangles to render every frame loop
 	array_free(triangles_to_render);
-
-	// draw_line(100, 200, 300, 50, 0xFFFFFF00);
 
 	render_color_buffer();
 	clear_color_buffer(0xFF399145);
