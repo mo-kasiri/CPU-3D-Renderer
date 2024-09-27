@@ -1,8 +1,8 @@
-# Blender 4.2.1 LTS MTL File: 'None'
-# www.blender.org
+# Blender MTL File: 'None'
+# Material Count: 5
 
 newmtl Material.010
-Ns 0.297240
+Ns 0.297239
 Ka 1.000000 1.000000 1.000000
 Kd 0.077103 0.077103 0.077103
 Ks 0.500000 0.500000 0.500000
@@ -12,7 +12,7 @@ d 1.000000
 illum 2
 
 newmtl Material.011
-Ns 0.420314
+Ns 0.420315
 Ka 1.000000 1.000000 1.000000
 Kd 0.091686 0.091686 0.091686
 Ks 0.500000 0.500000 0.500000

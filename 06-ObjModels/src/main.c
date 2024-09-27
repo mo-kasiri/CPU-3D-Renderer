@@ -14,7 +14,7 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 triangle_t *triangles_to_render = NULL;
 
-vec3_t camera_position = {.x = 0, .y = 0, .z = -8};
+vec3_t camera_position = {.x = 0, .y = 0, .z = -5};
 
 float fov_factor = 640;
 
@@ -38,7 +38,7 @@ void setup(void)
 
 	// Loads the cube values in the mesh data structure
 	// load_cube_mesh_data();
-	load_obj_file_data("./assets/icosphere.obj");
+	load_obj_file_data("./assets/f-22.obj");
 }
 
 void process_input(void)
@@ -77,9 +77,9 @@ void draw_mesh(void)
 	// Initialize the array of triangles to render
 	triangles_to_render = NULL;
 
-	mesh.rotation.x += 0.02;
-	mesh.rotation.y += 0.02;
-	mesh.rotation.z += 0.02;
+	mesh.rotation.x += 0.01;
+	mesh.rotation.y += 0.00;
+	mesh.rotation.z += 0.00;
 
 	// Loop all triangle faces of our mesh
 	for (int i = 0; i < array_length(mesh.faces); i++)
@@ -144,9 +144,9 @@ void render(void)
 	for (int i = 0; i < array_length(triangles_to_render); i++)
 	{
 		triangle_t triangle = triangles_to_render[i];
-		draw_rect(triangle.points[0].x, triangle.points[0].y, 5, 5, 0xFFFFFFF0);
-		draw_rect(triangle.points[1].x, triangle.points[1].y, 5, 5, 0xFFFFFFF0);
-		draw_rect(triangle.points[2].x, triangle.points[2].y, 5, 5, 0xFFFFFFF0);
+		draw_rect(triangle.points[0].x, triangle.points[0].y, 2, 2, 0xFFFFFFF0);
+		draw_rect(triangle.points[1].x, triangle.points[1].y, 2, 2, 0xFFFFFFF0);
+		draw_rect(triangle.points[2].x, triangle.points[2].y, 2, 2, 0xFFFFFFF0);
 
 		// Draw unfield triangle
 		draw_triangle(
