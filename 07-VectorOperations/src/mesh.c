@@ -75,7 +75,7 @@ void load_obj_file_data(const char *filename)
     FILE *file = fopen(filename, "r");
     if (!file)
     {
-        perror("Error opening file");
+        perror("Error opening file %s\n", filename);
         return;
     }
 
