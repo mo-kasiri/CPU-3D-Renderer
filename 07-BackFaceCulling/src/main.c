@@ -14,7 +14,7 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 triangle_t *triangles_to_render = NULL;
 
-vec3_t camera_position = {.x = 0, .y = 0, .z = -5};
+vec3_t camera_position = {0, 0, 0};
 
 float fov_factor = 640;
 
@@ -38,7 +38,7 @@ void setup(void)
 
 	// Loads the cube values in the mesh data structure
 	// load_cube_mesh_data();
-	load_obj_file_data("./assets/f-22.obj");
+	load_obj_file_data("./assets/cube.obj");
 }
 
 void process_input(void)
@@ -78,8 +78,8 @@ void draw_mesh(void)
 	triangles_to_render = NULL;
 
 	mesh.rotation.x += 0.01;
-	mesh.rotation.y += 0.00;
-	mesh.rotation.z += 0.00;
+	mesh.rotation.y += 0.01;
+	mesh.rotation.z += 0.01;
 
 	// Loop all triangle faces of our mesh
 	for (int i = 0; i < array_length(mesh.faces); i++)
@@ -92,8 +92,10 @@ void draw_mesh(void)
 		face_vertices[2] = mesh.vertices[mesh_face.c - 1];
 
 		triangle_t projected_triangle;
+		
 
 		// Loop all three vertices of this current face and apply transformation
+		vec3_t transformed_vertices[3];
 		for (int j = 0; j < 3; j++)
 		{
 			vec3_t transformed_vertex = face_vertices[j];
@@ -103,10 +105,31 @@ void draw_mesh(void)
 			transformed_vertex = vec3_rotate_z(transformed_vertex, mesh.rotation.z);
 
 			// Translate the vertex away from the camera
-			transformed_vertex.z -= camera_position.z;
+			transformed_vertex.z += 5;
+			//Left hand coordinates (+z is inside or away from the camera)
+			transformed_vertices[j] = transformed_vertex;
+		}
 
+		
+		vec3_t vertex_A = transformed_vertices[0];
+		vec3_t vertex_B = transformed_vertices[1];
+		vec3_t vertex_C = transformed_vertices[2];
+
+		vec3_t vector_AB = vec3_sub(vertex_A, vertex_B);
+		vec3_t vector_AC = vec3_sub(vertex_A, vertex_C);
+
+		vec3_t normal_vector = vec3_cross(vector_AC, vector_AB);
+
+		vec3_t vector_OB = vec3_sub(camera_position, vertex_B);
+		float camera_normal_dot = vec3_dot(vector_OB, normal_vector);
+
+		if(camera_normal_dot > 0){
+			continue;
+		}
+
+		for(int j = 0; j < 3; j++){
 			// Project the current vertex
-			vec2_t projected_point = project(transformed_vertex);
+			vec2_t projected_point = project(transformed_vertices[j]);
 
 			// Scale and translate the projected points to the middle of the screen
 			projected_point.x += (window_width / 2);
@@ -114,6 +137,7 @@ void draw_mesh(void)
 
 			projected_triangle.points[j] = projected_point;
 		}
+
 		// save the projeted triangle in the array of triangles to render
 		// triangles_to_render[i] = projected_triangle;
 		array_push(triangles_to_render, projected_triangle);
@@ -144,9 +168,9 @@ void render(void)
 	for (int i = 0; i < array_length(triangles_to_render); i++)
 	{
 		triangle_t triangle = triangles_to_render[i];
-		draw_rect(triangle.points[0].x, triangle.points[0].y, 2, 2, 0xFFFFFFF0);
-		draw_rect(triangle.points[1].x, triangle.points[1].y, 2, 2, 0xFFFFFFF0);
-		draw_rect(triangle.points[2].x, triangle.points[2].y, 2, 2, 0xFFFFFFF0);
+		//draw_rect(triangle.points[0].x, triangle.points[0].y, 2, 2, 0xFFFFFFF0);
+		//draw_rect(triangle.points[1].x, triangle.points[1].y, 2, 2, 0xFFFFFFF0);
+		//draw_rect(triangle.points[2].x, triangle.points[2].y, 2, 2, 0xFFFFFFF0);
 
 		// Draw unfield triangle
 		draw_triangle(
