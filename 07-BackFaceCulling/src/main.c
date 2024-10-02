@@ -116,11 +116,15 @@ void draw_mesh(void)
 		vec3_t vertex_C = transformed_vertices[2];
 
 		vec3_t vector_AB = vec3_sub(vertex_A, vertex_B);
+		vec3_normalize(&vector_AB);
 		vec3_t vector_AC = vec3_sub(vertex_A, vertex_C);
+		vec3_normalize(&vector_AC);
 
 		vec3_t normal_vector = vec3_cross(vector_AC, vector_AB);
+		vec3_normalize(&normal_vector);
 
 		vec3_t vector_OB = vec3_sub(camera_position, vertex_B);
+		vec3_normalize(&vector_OB);
 		float camera_normal_dot = vec3_dot(vector_OB, normal_vector);
 
 		if(camera_normal_dot > 0){

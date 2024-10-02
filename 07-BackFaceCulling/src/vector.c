@@ -8,6 +8,7 @@ float vec2_length(const vec2_t v)
 {
     return (sqrt(pow(v.x,2)+ pow(v.y,2)));
 }
+
 vec2_t vec2_add(const vec2_t v, const vec2_t w){
     vec2_t result = {
         .x = v.x + w.x,
@@ -30,6 +31,12 @@ vec2_t vec2_mul(const vec2_t v, const float factor){
 
 float vec2_dot(const vec2_t v, const vec2_t w){
     return (v.x * w.x + v.y * w.y);
+}
+
+void vec2_normalize(vec2_t* v){
+    float length = sqrt(pow(v->x,2)+ pow(v->y,2));
+    v->x /= length;
+    v->y /= length;
 }
 
 ////////////////////////////////////////////////////
@@ -76,6 +83,13 @@ vec3_t vec3_cross(const vec3_t v, const vec3_t w){
 
 float vec3_dot(const vec3_t v, const vec3_t w){
     return (v.x * w.x + v.y * w.y + v.z * w.z);
+}
+
+void vec3_normalize(vec3_t* v){
+    float length = sqrt(pow(v->x,2)+ pow(v->y,2) + pow(v->z,2));
+    v->x /= length;
+    v->y /= length;
+    v->z /= length;
 }
 
 // Rotation Functions
