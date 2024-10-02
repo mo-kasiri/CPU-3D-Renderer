@@ -1,5 +1,5 @@
 # CPU Based 3D Rendering
-Vector operations in 3D space.
+Vector operations in 3D space and back face culling.
 
 ## Demo
 <img src="./demo.gif" />
