@@ -161,12 +161,15 @@ void update(void)
 	// How many milli seconds has passed since the last frame
 	previous_frame_time = SDL_GetTicks(); // Started since SDL_Init
 
-	draw_mesh();
+	//draw_mesh();
+	
+	draw_grid();
+	draw_filled_triangle(300,100,50,40,500,700, 0xFFFFFFFF);
+	//draw_triangle(300,100,50,40,500,700, 0xFFFF0000);
 }
 
 void render(void)
 {
-	draw_grid();
 	// printf("Triangles to render count: %d\n", array_length(triangles_to_render));
 	//  For loop drawing triangles' points, lines and render them
 	for (int i = 0; i < array_length(triangles_to_render); i++)
@@ -176,16 +179,20 @@ void render(void)
 		//draw_rect(triangle.points[1].x, triangle.points[1].y, 2, 2, 0xFFFFFFF0);
 		//draw_rect(triangle.points[2].x, triangle.points[2].y, 2, 2, 0xFFFFFFF0);
 
+		draw_filled_triangle(
+			triangle.points[0].x, triangle.points[0].y,
+			triangle.points[1].x, triangle.points[1].y,
+			triangle.points[2].x, triangle.points[2].y,
+			0xFFFFFFFF);
+
 		// Draw unfield triangle
 		draw_triangle(
-			triangle.points[0].x,
-			triangle.points[0].y,
-			triangle.points[1].x,
-			triangle.points[1].y,
-			triangle.points[2].x,
-			triangle.points[2].y,
+			triangle.points[0].x, triangle.points[0].y,
+			triangle.points[1].x, triangle.points[1].y,
+			triangle.points[2].x, triangle.points[2].y,
 			0xFFFFFF00);
 	}
+	
 
 	// Clear the array of triangles to render every frame loop
 	array_free(triangles_to_render);

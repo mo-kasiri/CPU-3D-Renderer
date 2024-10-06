@@ -118,7 +118,7 @@ void draw_line(const int x0, const int y0, const int x1, const int y1, const uin
 	int delta_x = (x1 - x0);
 	int delta_y = (y1 - y0);
 
-	int side_lenght = abs(delta_x) >= abs(delta_y) ? abs(delta_x) : abs(delta_y);
+	int side_lenght = (abs(delta_x) >= abs(delta_y)) ? abs(delta_x) : abs(delta_y);
 
 	// Find how much we should increment in both x and y each step
 	float x_inc = delta_x / (float)side_lenght;
