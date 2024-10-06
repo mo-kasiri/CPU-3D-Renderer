@@ -92,7 +92,6 @@ void draw_mesh(void)
 		face_vertices[2] = mesh.vertices[mesh_face.c - 1];
 
 		triangle_t projected_triangle;
-		
 
 		// Loop all three vertices of this current face and apply transformation
 		vec3_t transformed_vertices[3];
@@ -106,11 +105,10 @@ void draw_mesh(void)
 
 			// Translate the vertex away from the camera
 			transformed_vertex.z += 5;
-			//Left hand coordinates (+z is inside or away from the camera)
+			// Left hand coordinates (+z is inside or away from the camera)
 			transformed_vertices[j] = transformed_vertex;
 		}
 
-		
 		vec3_t vertex_A = transformed_vertices[0];
 		vec3_t vertex_B = transformed_vertices[1];
 		vec3_t vertex_C = transformed_vertices[2];
@@ -127,11 +125,13 @@ void draw_mesh(void)
 		vec3_normalize(&vector_OB);
 		float camera_normal_dot = vec3_dot(vector_OB, normal_vector);
 
-		if(camera_normal_dot > 0){
+		if (camera_normal_dot > 0)
+		{
 			continue;
 		}
 
-		for(int j = 0; j < 3; j++){
+		for (int j = 0; j < 3; j++)
+		{
 			// Project the current vertex
 			vec2_t projected_point = project(transformed_vertices[j]);
 
@@ -161,11 +161,11 @@ void update(void)
 	// How many milli seconds has passed since the last frame
 	previous_frame_time = SDL_GetTicks(); // Started since SDL_Init
 
-	//draw_mesh();
-	
+	draw_mesh();
+
 	draw_grid();
-	draw_filled_triangle(300,100,50,40,500,700, 0xFFFFFFFF);
-	//draw_triangle(300,100,50,40,500,700, 0xFFFF0000);
+	// draw_filled_triangle(300, 100, 50, 40, 500, 700, 0xFFFFFFFF);
+	//  draw_triangle(300,100,50,40,500,700, 0xFFFF0000);
 }
 
 void render(void)
@@ -175,9 +175,9 @@ void render(void)
 	for (int i = 0; i < array_length(triangles_to_render); i++)
 	{
 		triangle_t triangle = triangles_to_render[i];
-		//draw_rect(triangle.points[0].x, triangle.points[0].y, 2, 2, 0xFFFFFFF0);
-		//draw_rect(triangle.points[1].x, triangle.points[1].y, 2, 2, 0xFFFFFFF0);
-		//draw_rect(triangle.points[2].x, triangle.points[2].y, 2, 2, 0xFFFFFFF0);
+		// draw_rect(triangle.points[0].x, triangle.points[0].y, 2, 2, 0xFFFFFFF0);
+		// draw_rect(triangle.points[1].x, triangle.points[1].y, 2, 2, 0xFFFFFFF0);
+		// draw_rect(triangle.points[2].x, triangle.points[2].y, 2, 2, 0xFFFFFFF0);
 
 		draw_filled_triangle(
 			triangle.points[0].x, triangle.points[0].y,
@@ -190,9 +190,8 @@ void render(void)
 			triangle.points[0].x, triangle.points[0].y,
 			triangle.points[1].x, triangle.points[1].y,
 			triangle.points[2].x, triangle.points[2].y,
-			0xFFFFFF00);
+			0xFFFF0000);
 	}
-	
 
 	// Clear the array of triangles to render every frame loop
 	array_free(triangles_to_render);
