@@ -8,6 +8,24 @@
 #define FPS 30
 #define FRAME_TARGET_TIME (1000 / FPS) // The Constant Delta
 
+enum cull_methods
+{
+    CULL_NONE,
+    CULL_BACKFACE
+};
+
+enum render_methods
+{
+    RENDER_WIRE,
+    RENDER_WIRE_VERTEX,
+    RENDER_FILL_TRIANGLE,
+    RENDER_FILL_TRIANGLE_WIRE,
+    RENDER_FILL_TRIANGLE_WIRE_VERTEX
+};
+
+// extern enum render_methods render_method;
+// extern enum cull_methods cull_method;
+
 extern SDL_Window *window;
 extern SDL_Renderer *renderer;
 extern uint32_t *color_buffer;
@@ -24,6 +42,7 @@ void draw_rect(const unsigned int posx,
                const unsigned int width,
                const unsigned int height,
                const uint32_t color);
+
 void draw_line(const int x0, const int y0, const int x1, const int y1, const uint32_t color);
 void draw_triangle(const int x0, const int y0, const int x1, const int y1, const int x2, const int y2, const uint32_t color);
 

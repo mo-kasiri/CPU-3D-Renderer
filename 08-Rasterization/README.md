@@ -1,5 +1,8 @@
 # CPU Based 3D Rendering
-Vector operations in 3D space.
+Rasterization for coloring triangles.
+
+# How To Use
+Press 1, 2, 3, 4, 5 to change render mode (shading mode), and press c, d to toggle backface culling.
 
 ## Demo
 <img src="./demo.gif" />
