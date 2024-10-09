@@ -4,6 +4,7 @@
 #include <SDL2/SDL.h>
 
 #include "array.h"
+#include "sorting.h"
 #include "vector.h"
 #include "display.h"
 #include "triangle.h"
@@ -162,16 +163,24 @@ void draw_mesh(void)
 
 			// projected_triangle.points[j] = projected_point;
 		};
+		float avg_depth = (transformed_vertices[0].z + transformed_vertices[1].z + transformed_vertices[2].z) / 3;
 		triangle_t projected_triangle = {
 			.points = {
 				{.x = projected_point[0].x, .y = projected_point[0].y},
 				{.x = projected_point[1].x, .y = projected_point[1].y},
 				{.x = projected_point[2].x, .y = projected_point[2].y}},
-			.color = mesh_face.color};
+			.color = mesh_face.color,
+			.avg_depth = avg_depth};
 
 		// save the projeted triangle in the array of triangles to render
 		// triangles_to_render[i] = projected_triangle;
+
 		array_push(triangles_to_render, projected_triangle);
+	}
+	// Sort triangles based on their z-value
+	if (array_length(triangles_to_render) > 0)
+	{
+		bubblesort(triangles_to_render, array_length(triangles_to_render));
 	}
 }
 
@@ -225,7 +234,6 @@ void render(void)
 		// Drawing Verteces
 		if (render_method == RENDER_FILL_TRIANGLE_WIRE_VERTEX || render_method == RENDER_WIRE_VERTEX)
 		{
-
 			draw_rect(triangle.points[0].x, triangle.points[0].y, 5, 5, 0xFF0000FF);
 			draw_rect(triangle.points[1].x, triangle.points[1].y, 5, 5, 0xFF0000FF);
 			draw_rect(triangle.points[2].x, triangle.points[2].y, 5, 5, 0xFF0000FF);

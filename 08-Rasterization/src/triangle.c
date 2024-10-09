@@ -2,7 +2,7 @@
 #include "display.h"
 
 // TODO: Craete implementation for triangle.h functions
-void swap(int *a, int *b)
+void swap_vertices(int *a, int *b)
 {
   int tmp = *a;
   *a = *b;
@@ -88,18 +88,18 @@ void draw_filled_triangle(int x0, int y0, int x1, int y1, int x2, int y2, uint32
   // We need to sort vertices by y-coordinates (y0 < y1 < y2)
   if (y0 > y1)
   {
-    swap(&y0, &y1);
-    swap(&x0, &x1);
+    swap_vertices(&y0, &y1);
+    swap_vertices(&x0, &x1);
   }
   if (y1 > y2)
   {
-    swap(&y1, &y2);
-    swap(&x1, &x2);
+    swap_vertices(&y1, &y2);
+    swap_vertices(&x1, &x2);
   }
   if (y0 > y1)
   {
-    swap(&y0, &y1);
-    swap(&x0, &x1);
+    swap_vertices(&y0, &y1);
+    swap_vertices(&x0, &x1);
   }
 
   if (y1 == y2)
