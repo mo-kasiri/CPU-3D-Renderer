@@ -47,6 +47,17 @@ void setup(void)
 	// Loads the cube values in the mesh data structure
 	load_cube_mesh_data();
 	// load_obj_file_data("./assets/cube.obj");
+
+	mat4_t a = {{{1, 0, 0, 0},
+				 {0, 1, 0, 0},
+				 {0, 0, 1, 0},
+				 {0, 0, 0, 1}}};
+
+	mat4_t b = {{{2, 0, 0, 0},
+				 {0, 2, 0, 0},
+				 {0, 0, 2, 0},
+				 {0, 0, 0, 2}}};
+	mat4_mul_mat4(a, b);
 }
 
 void process_input(void)
@@ -128,21 +139,18 @@ void draw_mesh(void)
 		for (int j = 0; j < 3; j++)
 		{
 			vec4_t transformed_vertex = vec4_from_vec3(face_vertices[j], 1);
-			// transformed_vertex = vec4_from_vec3(vec3_rotate_x(vec3_from_vec4(transformed_vertex), mesh.rotation.x), 1);
-			// transformed_vertex = vec4_from_vec3(vec3_rotate_y(vec3_from_vec4(transformed_vertex), mesh.rotation.y), 1);
-			// transformed_vertex = vec4_from_vec3(vec3_rotate_z(vec3_from_vec4(transformed_vertex), mesh.rotation.z), 1);
 
-			// Use a matrix to scale our original vertex
-			// Multiply the scale_matrix by the vertex
-			transformed_vertex = mat4_mul_vec4(transformed_vertex, rotation_matrix_x);
-			transformed_vertex = mat4_mul_vec4(transformed_vertex, rotation_matrix_y);
-			transformed_vertex = mat4_mul_vec4(transformed_vertex, rotation_matrix_z);
-			transformed_vertex = mat4_mul_vec4(transformed_vertex, scale_matrix);
-			transformed_vertex = mat4_mul_vec4(transformed_vertex, translation_matrix);
+			// Create a World matrix combining scale, rotation, adn translation matrices
+			mat4_t world_matrix = mat4_identity();
+			world_matrix = mat4_mul_mat4(scale_matrix, world_matrix);
+			world_matrix = mat4_mul_mat4(rotation_matrix_x, world_matrix);
+			world_matrix = mat4_mul_mat4(rotation_matrix_y, world_matrix);
+			world_matrix = mat4_mul_mat4(rotation_matrix_z, world_matrix);
+			world_matrix = mat4_mul_mat4(translation_matrix, world_matrix);
 
-			// Translate the vertex away from the camera
-			// transformed_vertex.z += 5;
-			// Left hand coordinates (+z is inside or away from the camera)
+			// Multiply all matrices and load world matrix
+			transformed_vertex = mat4_mul_vec4(transformed_vertex, world_matrix);
+
 			transformed_vertices[j] = transformed_vertex;
 		}
 
@@ -219,9 +227,7 @@ void update(void)
 
 	draw_mesh();
 
-	// draw_grid();
-	//  draw_filled_triangle(300, 100, 50, 40, 500, 700, 0xFFFFFFFF);
-	//   draw_triangle(300,100,50,40,500,700, 0xFFFF0000);
+	draw_grid();
 }
 
 void render(void)

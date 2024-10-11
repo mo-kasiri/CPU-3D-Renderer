@@ -51,6 +51,25 @@ vec4_t mat4_mul_vec4(vec4_t v, mat4_t m)
     return result;
 }
 
+mat4_t mat4_mul_mat4(mat4_t m1, mat4_t m2)
+{
+    mat4_t result = {{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}};
+
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            result.m[i][j] = 0;
+            for (int k = 0; k < 4; k++)
+            {
+                result.m[i][j] += m1.m[i][k] * m2.m[k][j];
+            }
+        }
+    }
+
+    return result;
+}
+
 mat4_t mat4_make_rotation(float r, enum axis a)
 {
     float c = cos(r);
