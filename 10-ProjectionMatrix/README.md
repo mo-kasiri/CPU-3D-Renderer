@@ -1,12 +1,15 @@
 # CPU Based 3D Rendering
-In this repo, I try to develope a simple (based on C programming language and SDL library) 3D rasterization renderer, which works entirely on the CPU.
+Rasterization for coloring triangles.
+
+# How To Use
+Press 1, 2, 3, 4, 5 to change render mode (shading mode), and press c, d to toggle backface culling.
+
+## Demo
+<img src="./demo.gif" />
 
 ## Setup
 Install [MinGW](https://www.mingw-w64.org/downloads/).
 Run this followed commands:
-
-## Demo
-<img src="./demo.gif" />
 
 ``` bash
 # Install SDL2 library
