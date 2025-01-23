@@ -71,6 +71,7 @@ void load_cube_mesh_data(void)
 void load_obj_file_data(const char *filename)
 {
     // char abs_path[1024];
+    unsigned int varColor = 0xFFFF00FF;
 
     printf("Opening OBJ file: %s\n", filename);
 
@@ -108,7 +109,9 @@ void load_obj_file_data(const char *filename)
             face_t face = {
                 .a = vertex_indices[0],
                 .b = vertex_indices[1],
-                .c = vertex_indices[2]};
+                .c = vertex_indices[2],
+                .color = varColor};
+            varColor += 100;
             array_push(mesh.faces, face);
         }
     }

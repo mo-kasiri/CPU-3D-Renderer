@@ -23,6 +23,13 @@ typedef struct
     vec3_t translation; // translation with x,y, and z values
 } mesh_t;
 
+typedef struct
+{
+    vec3_t rotation;    // Rotation with x,y and z values
+    vec3_t scale;       // scale with x, y, and z values
+    vec3_t translation; // translation with x,y, and z values
+} transform_t;
+
 extern mesh_t mesh;
 
 void load_cube_mesh_data(void);

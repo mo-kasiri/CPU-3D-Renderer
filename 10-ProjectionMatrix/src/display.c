@@ -106,8 +106,6 @@ void draw_rect(const unsigned int posx, const unsigned int posy, const unsigned 
 			int current_x = posx + i;
 			int current_y = posy + j;
 			draw_pixel(current_x, current_y, color);
-			// if (x >= posx && x <= posx + width && y >= posy && y <= posy + height)
-			// color_buffer[(window_width * y) + x] = color;
 		}
 	}
 }
