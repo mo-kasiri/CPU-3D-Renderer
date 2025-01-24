@@ -91,8 +91,8 @@ void draw_mesh(void)
 	triangles_to_render = NULL;
 
 	mesh.rotation.x += 0.01;
-	mesh.rotation.y += 0.01;
-	mesh.rotation.z += 0.01;
+	// mesh.rotation.y += 0.01;
+	// mesh.rotation.z += 0.01;
 
 	mesh.translation.z = 5;
 	//  mesh.translation.x += 0.1f;
@@ -173,6 +173,9 @@ void draw_mesh(void)
 			projected_point[j].x *= (window_width / 2.0f);
 			projected_point[j].y *= (window_height / 2.0f);
 			// projected_point[j].y += 500;
+
+			// Invert the y values to account for flipped screen y coordinate
+			projected_point[j].y *= -1;
 
 			// Scale and translate the projected points to the middle of the screen
 			projected_point[j].x += (window_width / 2.0f);
