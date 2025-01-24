@@ -29,7 +29,7 @@ enum cull_methods cull_method;
 
 void setup(void)
 {
-	render_method = RENDER_FILL_TRIANGLE_WIRE_VERTEX;
+	render_method = RENDER_FILL_TRIANGLE;
 	cull_method = CULL_BACKFACE;
 
 	// Allocate the required memory in bytes to bold the color buffer
@@ -46,11 +46,12 @@ void setup(void)
 		window_height);
 
 	// Initialize the perspective projection matrix
-	projection_matrix = mat4_make_perspective(PI / 2.0f, (float)window_height / (float)window_width, 0.1, 100.0);
+	projection_matrix = mat4_make_perspective(PI / 3.0f, (float)window_height / (float)window_width, 0.1, 100.0);
 
 	// Loads the cube values in the mesh data structure
 	// load_cube_mesh_data();
-	load_obj_file_data("./assets/f-22.obj");
+	// load_obj_file_data("./assets/f-22.obj");
+	load_obj_file_data("./assets/fighter-jet.obj");
 }
 
 void process_input(void)

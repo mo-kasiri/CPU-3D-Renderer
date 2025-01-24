@@ -6,7 +6,6 @@ Press 1, 2, 3, 4, 5 to change render mode (shading mode), and press c, d to togg
 
 ## Demo
 <img src="./demo.gif" />
-<img src="./projection_matrix.png"/>
 
 ## Setup
 Install [MinGW](https://www.mingw-w64.org/downloads/).
