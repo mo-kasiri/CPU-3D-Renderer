@@ -23,6 +23,7 @@ mat4_t projection_matrix;
 
 bool is_running = false;
 int previous_frame_time = 0;
+float delta_time = 0;
 
 enum render_methods render_method;
 enum cull_methods cull_method;
@@ -81,6 +82,10 @@ void process_input(void)
 			cull_method = CULL_BACKFACE;
 		if (event.key.keysym.sym == SDLK_d)
 			cull_method = CULL_NONE;
+		if (event.key.keysym.sym == SDLK_w)
+			mesh.translation.y += 10.0 * delta_time;
+		if (event.key.keysym.sym == SDLK_s)
+			mesh.translation.y -= 10.0 * delta_time;
 		break;
 	}
 }
@@ -187,17 +192,8 @@ void draw_mesh(void)
 				{.x = projected_point[0].x, .y = projected_point[0].y},
 				{.x = projected_point[1].x, .y = projected_point[1].y},
 				{.x = projected_point[2].x, .y = projected_point[2].y}},
-			//.color = mesh_face.color,
-			.color = light_apply_intensity(mesh_face.color, SDL_clamp(vec3_dot(normal_vector, global_light.direction), 0.0, 1.0)),
+			.color = light_apply_intensity(mesh_face.color, vec3_dot(normal_vector, global_light.direction)),
 			.avg_depth = avg_depth};
-
-		// if (i == 0)
-		// {
-		// 	printf("%f: \n", vec3_dot(normal_vector, global_light.direction));
-		// }
-
-		// save the projeted triangle in the array of triangles to render
-		// triangles_to_render[i] = projected_triangle;
 
 		array_push(triangles_to_render, projected_triangle);
 	}
@@ -219,6 +215,8 @@ void update(void)
 		SDL_Delay(time_to_wait);
 	}
 	// How many milli seconds has passed since the last frame
+	delta_time = 1.0f / (SDL_GetTicks() - previous_frame_time);
+	// printf("%f: \n", delta_time);
 	previous_frame_time = SDL_GetTicks(); // Started since SDL_Init
 
 	draw_mesh();
