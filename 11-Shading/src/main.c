@@ -47,7 +47,7 @@ void setup(void)
 		window_height);
 
 	// Initialize the perspective projection matrix
-	projection_matrix = mat4_make_perspective(PI / 3.0f, (float)window_height / (float)window_width, 0.1, 100.0);
+	projection_matrix = mat4_make_perspective(PI / 6.0f, (float)window_height / (float)window_width, 0.1, 100.0);
 
 	// Loads the cube values in the mesh data structure
 	// load_cube_mesh_data();
