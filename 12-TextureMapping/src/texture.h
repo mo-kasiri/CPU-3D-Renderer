@@ -1,6 +1,7 @@
 #ifndef TEXTURE_H
 #define TEXTURE_H
 #include <stdint.h>
+#include <stdio.h>
 
 typedef struct // like vec2_t
 {

@@ -51,7 +51,7 @@ void setup(void)
 	projection_matrix = mat4_make_perspective(PI / 3.0f, (float)window_height / (float)window_width, 0.1, 100.0);
 
 	// Manually load the hardcoded texture data from static array to a dynamic pointer
-	mesh_texture = (uint32_t *)malloc(sizeof(uint32_t) * texture_width * texture_height);
+	// mesh_texture = NULL;
 	mesh_texture = (uint32_t *)REDBRICK_TEXTURE;
 
 	// Loads the cube values in the mesh data structure
@@ -277,7 +277,7 @@ void render(void)
 		}
 
 		// Drawing Vertices
-		if (render_method == RENDER_FILL_TRIANGLE_WIRE_VERTEX || render_method == RENDER_WIRE_VERTEX)
+		if (render_method == RENDER_FILL_TRIANGLE_WIRE_VERTEX || render_method == RENDER_WIRE_VERTEX || render_method == RENDER_TEXTURE_WIRE_VERTEX)
 		{
 			draw_rect(triangle.points[0].x, triangle.points[0].y, 5, 5, 0xFF0000FF);
 			draw_rect(triangle.points[1].x, triangle.points[1].y, 5, 5, 0xFF0000FF);
@@ -288,12 +288,12 @@ void render(void)
 		if (render_method == RENDER_TEXTURE || render_method == RENDER_TEXTURE_WIRE)
 		{
 			// Draw unfield triangle
-			// draw_texture_triangle(
-			// 	triangle.points[0].x, triangle.points[0].y,
-			// 	triangle.points[1].x, triangle.points[1].y,
-			// 	triangle.points[2].x, triangle.points[2].y,
-			// 	triangle.tex_coords[0], triangle.tex_coords[1], triangle.tex_coords[2],
-			// 	triangle.color);
+			draw_texture_triangle(
+				triangle.points[0].x, triangle.points[0].y,
+				triangle.points[1].x, triangle.points[1].y,
+				triangle.points[2].x, triangle.points[2].y,
+				triangle.tex_coords[0], triangle.tex_coords[1], triangle.tex_coords[2],
+				mesh_texture);
 		}
 	}
 
@@ -312,7 +312,8 @@ void free_resources(void)
 	free(color_buffer);
 	array_free(mesh.faces);
 	array_free(mesh.vertices);
-	destroy_textures();
+	// free(mesh_texture);
+	//  destroy_textures();
 }
 
 int main(void)

@@ -1,6 +1,28 @@
 #include "sorting.h"
 #include "stdio.h"
 
+void swap_int(int *a, int *b)
+{
+    int temp = *b;
+    *b = *a;
+    *a = temp;
+}
+
+// TODO: Craete implementation for triangle.h functions
+void swap_vertices(int *a, int *b)
+{
+    int tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+
+void swap_tex2_t(tex2_t *a, tex2_t *b)
+{
+    tex2_t tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+
 void swap_triangle(triangle_t *xp, triangle_t *yp)
 {
     triangle_t tmp = *xp;

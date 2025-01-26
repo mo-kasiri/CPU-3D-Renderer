@@ -32,5 +32,7 @@ void fill_flatTop_triangle(int x0, int y0, int x1, int y1, int x2, int y2, uint3
 
 // TODO:
 void draw_texture_triangle(int x0, int y0, int x1, int y1, int x2, int y2, tex2_t uv0, tex2_t uv1, tex2_t uv3, uint32_t *texture);
+void draw_flatTop_textured_triangle(int x0, int y0, int x1, int y1, int x2, int y2, tex2_t uv0, tex2_t uv1, tex2_t uv3, uint32_t *texture);
+void draw_flatBottom_textured_triangle(int x0, int y0, int x1, int y1, int x2, int y2, tex2_t uv0, tex2_t uv1, tex2_t uv3, uint32_t *texture);
 
 void swap_vertices(int *a, int *b);
