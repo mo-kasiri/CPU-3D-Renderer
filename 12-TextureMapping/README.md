@@ -1,5 +1,5 @@
 # CPU Based 3D Rendering
-Adding the idea of directional light (like sun) and flat shading.
+Mapping texture to 3D objects using interpolation and  barycentric weights.
 
 # How To Use
 Press 1, 2, 3, 4, 5, 6, 7, 9 to change render mode (shading mode), and press wasd to move the model and x, z  to toggle backface culling.

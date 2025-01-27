@@ -30,9 +30,11 @@ void draw_filled_triangle(int x0, int y0, int x1, int y1, int x2, int y2, uint32
 void fill_flatBottom_triangle(int x0, int y0, int x1, int y1, int x2, int y2, uint32_t color);
 void fill_flatTop_triangle(int x0, int y0, int x1, int y1, int x2, int y2, uint32_t color);
 
-// TODO:
+void draw_texel(int x, int y, uint32_t *texture, vec2_t point_a, vec2_t point_b, vec2_t point_c, tex2_t uv0, tex2_t uv1, tex2_t uv2);
 void draw_texture_triangle(int x0, int y0, int x1, int y1, int x2, int y2, tex2_t uv0, tex2_t uv1, tex2_t uv3, uint32_t *texture);
-void draw_flatTop_textured_triangle(int x0, int y0, int x1, int y1, int x2, int y2, tex2_t uv0, tex2_t uv1, tex2_t uv3, uint32_t *texture);
-void draw_flatBottom_textured_triangle(int x0, int y0, int x1, int y1, int x2, int y2, tex2_t uv0, tex2_t uv1, tex2_t uv3, uint32_t *texture);
+void draw_flatTop_textured_triangle(int x0, int y0, int x1, int y1, int x2, int y2, tex2_t uv0, tex2_t uv1, tex2_t uv2, uint32_t *texture);
+void draw_flatBottom_textured_triangle(int x0, int y0, int x1, int y1, int x2, int y2, tex2_t uv0, tex2_t uv1, tex2_t uv2, uint32_t *texture);
+
+vec3_t barycentric_weights(vec2_t a, vec2_t b, vec2_t c, vec2_t p);
 
 void swap_vertices(int *a, int *b);

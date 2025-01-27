@@ -14,8 +14,9 @@ extern unsigned int texture_width;
 extern unsigned int texture_height;
 
 extern const uint8_t REDBRICK_TEXTURE[];
+extern const uint32_t BRICK_TEXTURE_32[];
 extern uint32_t *mesh_texture;
 
-void destroy_textures(void);
+uint32_t rgba_to_argb(uint32_t rgba);
 
 #endif

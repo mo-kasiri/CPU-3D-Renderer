@@ -52,7 +52,10 @@ void setup(void)
 
 	// Manually load the hardcoded texture data from static array to a dynamic pointer
 	// mesh_texture = NULL;
-	mesh_texture = (uint32_t *)REDBRICK_TEXTURE;
+	// mesh_texture = (uint32_t *)REDBRICK_TEXTURE;
+	// printf("%d\n", mesh_texture[0]);
+	mesh_texture = (uint32_t *)BRICK_TEXTURE_32;
+	// printf("%i\n", mesh_texture[0]);
 
 	// Loads the cube values in the mesh data structure
 	load_cube_mesh_data();
