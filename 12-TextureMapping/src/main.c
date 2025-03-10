@@ -26,8 +26,8 @@ bool is_running = false;
 int previous_frame_time = 0;
 float delta_time = 0;
 
-enum render_methods render_method;
-enum cull_methods cull_method;
+render_methods render_method;
+cull_methods cull_method;
 
 void setup(void)
 {
@@ -122,8 +122,8 @@ void draw_mesh(void)
 	triangles_to_render = NULL;
 
 	mesh.rotation.x += 0.01;
-	// mesh.rotation.y += 0.01;
-	// mesh.rotation.z += 0.01;
+	mesh.rotation.y += 0.01;
+	mesh.rotation.z += 0.01;
 
 	mesh.translation.z = 5;
 	//  mesh.translation.x += 0.1f;
@@ -233,10 +233,10 @@ void draw_mesh(void)
 
 void update(void)
 {
-	// Wait some time untill reach the target frame time in milliseconds
+	// Wait some time until reach the target frame time in milliseconds
 	int time_to_wait = FRAME_TARGET_TIME - (SDL_GetTicks() - previous_frame_time);
 
-	// Only delay execuation if we are running too fast
+	// Only delay execution if we are running too fast
 	if (time_to_wait > 0 && time_to_wait <= FRAME_TARGET_TIME)
 	{
 		SDL_Delay(time_to_wait);
@@ -322,7 +322,7 @@ void free_resources(void)
 int main(void)
 {
 	/* Crate an SDL window */
-	is_running = initilize_window();
+	is_running = initialize_window();
 
 	setup();
 

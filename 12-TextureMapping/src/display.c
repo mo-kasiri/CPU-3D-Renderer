@@ -7,7 +7,7 @@ SDL_Texture *color_buffer_texture = NULL;
 int window_width = 1920;
 int window_height = 1080;
 
-bool initilize_window(void)
+bool initialize_window(void)
 {
 	SDL_Init(SDL_INIT_VIDEO);
 	if (SDL_Init(SDL_INIT_EVERYTHING == -1))
@@ -19,7 +19,7 @@ bool initilize_window(void)
 	// Use SDL to query what is the fullscreen max. width and height
 	if (SDL_GetNumVideoDisplays() > 0)
 	{
-		static int display_in_use = 0; /* Only using first display */
+		static unsigned int display_in_use = 0; /* Only using first display */
 
 		int i, display_mode_count;
 		SDL_DisplayMode mode;

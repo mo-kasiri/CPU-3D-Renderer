@@ -8,13 +8,13 @@
 #define FPS 30
 #define FRAME_TARGET_TIME (1000 / FPS) // The Constant Delta
 
-enum cull_methods
+typedef enum
 {
     CULL_NONE,
     CULL_BACKFACE
-};
+} cull_methods;
 
-enum render_methods
+typedef enum
 {
     RENDER_WIRE,
     RENDER_WIRE_VERTEX,
@@ -24,7 +24,7 @@ enum render_methods
     RENDER_TEXTURE,
     RENDER_TEXTURE_WIRE,
     RENDER_TEXTURE_WIRE_VERTEX
-};
+} render_methods;
 
 // extern enum render_methods render_method;
 // extern enum cull_methods cull_method;
@@ -37,7 +37,7 @@ extern int window_width;
 extern int window_height;
 extern float ratio;
 
-bool initilize_window(void);
+bool initialize_window(void);
 void draw_grid(void);
 void draw_pixel(const int x, const int y, uint32_t color);
 void draw_rect(const unsigned int posx,
