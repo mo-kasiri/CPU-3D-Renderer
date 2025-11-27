@@ -17,6 +17,7 @@ vec2_t vec2_add(const vec2_t v, const vec2_t w)
     return result;
 };
 
+// vector v - vector w
 vec2_t vec2_sub(const vec2_t v, const vec2_t w)
 {
     vec2_t result = {

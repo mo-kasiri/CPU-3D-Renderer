@@ -4,3 +4,5 @@ run:
 	./renderer
 clear:
 	rm renderer
+debug:
+	gdb --tui --silent ./renderer

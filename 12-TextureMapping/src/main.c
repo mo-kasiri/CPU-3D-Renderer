@@ -34,7 +34,7 @@ void setup(void)
 	render_method = RENDER_FILL_TRIANGLE;
 	cull_method = CULL_BACKFACE;
 
-	// Allocate the required memory in bytes to bold the color buffer
+	// Allocate the required memory in bytes to hold the color buffer
 	color_buffer = (uint32_t *)malloc(sizeof(uint32_t) * window_width * window_height);
 	if (color_buffer == NULL)
 		fprintf(stderr, "Error creating color buffer.\n");
@@ -50,17 +50,13 @@ void setup(void)
 	// Initialize the perspective projection matrix
 	projection_matrix = mat4_make_perspective(PI / 3.0f, (float)window_height / (float)window_width, 0.1, 100.0);
 
-	// Manually load the hardcoded texture data from static array to a dynamic pointer
-	// mesh_texture = NULL;
-	// mesh_texture = (uint32_t *)REDBRICK_TEXTURE;
-	// printf("%d\n", mesh_texture[0]);
+	
 	mesh_texture = (uint32_t *)BRICK_TEXTURE_32;
-	// printf("%i\n", mesh_texture[0]);
+	
 
 	// Loads the cube values in the mesh data structure
 	load_cube_mesh_data();
-	// load_obj_file_data("./assets/f-22.obj");
-	// load_obj_file_data("./assets/fighter-jet.obj");
+	
 }
 
 void process_input(void)
@@ -189,7 +185,7 @@ void draw_mesh(void)
 
 			if (camera_normal_dot > 0)
 			{
-				continue; // Do not do the rest in the for loop
+				continue; // Do not do the rest in the for loop, we don't need this face to render
 			}
 		}
 
@@ -212,6 +208,7 @@ void draw_mesh(void)
 			projected_point[j].x += (window_width / 2.0f);
 			projected_point[j].y += (window_height / 2.0f);
 		};
+		
 		float avg_depth = (transformed_vertices[0].z + transformed_vertices[1].z + transformed_vertices[2].z) / 3;
 		triangle_t projected_triangle = {
 			.points = {

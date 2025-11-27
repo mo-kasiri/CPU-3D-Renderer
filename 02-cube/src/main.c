@@ -6,10 +6,6 @@
 #include "vector.h"
 #include "display.h"
 
-////////////////////////////////////////////////////////
-// Writing some text on the screen
-///////////////////////////////////////////////////////
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 // Declare an array of vectors/points
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -101,6 +97,7 @@ void drawCube(void)
 		transformed_point = vec3_rotate_z(transformed_point, cube_rotation.z);
 
 		// Translate the points away from the camera
+		
 		vec3_t newTransformedPoint = transformed_point;
 		transformed_point.z -= camera_position.z;
 
@@ -115,8 +112,8 @@ void drawCube(void)
 			projected_point.y + (window_height / 2),
 			-4 * (newTransformedPoint.z - 2),
 			-4 * (newTransformedPoint.z - 2),
-			// 4,
-			// 4,
+			 //(int)4,
+			 //(int)4,
 			0xFFFFFF00);
 	}
 }

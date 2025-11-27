@@ -141,9 +141,9 @@ void render(void)
 		draw_rect(triangle.points[0].x, triangle.points[0].y, 5, 5, 0xFFFFFF00);
 		draw_rect(triangle.points[1].x, triangle.points[1].y, 5, 5, 0xFFFFFF00);
 		draw_rect(triangle.points[2].x, triangle.points[2].y, 5, 5, 0xFFFFFF00);
-		// draw_line(triangle.points[0].x, triangle.points[0].y, triangle.points[1].x, triangle.points[1].y, 0xFF);
-		// draw_line(triangle.points[1].x, triangle.points[1].y, triangle.points[2].x, triangle.points[2].y, 0xFF);
-		// draw_line(triangle.points[2].x, triangle.points[2].y, triangle.points[0].x, triangle.points[0].y, 0xFF);
+		draw_line(triangle.points[0].x, triangle.points[0].y, triangle.points[1].x, triangle.points[1].y, 0xFF);
+		draw_line(triangle.points[1].x, triangle.points[1].y, triangle.points[2].x, triangle.points[2].y, 0xFF);
+		draw_line(triangle.points[2].x, triangle.points[2].y, triangle.points[0].x, triangle.points[0].y, 0xFF);
 	}
 
 	render_color_buffer();

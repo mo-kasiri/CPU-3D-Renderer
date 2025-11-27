@@ -4,9 +4,10 @@
 
 typedef struct
 {
-    int a; // first vertex of the face
-    int b; // second vertex of the face
-    int c; // third vertex of the face
+    int a; // first index of vertex of the face
+    int b; // second index of vertex of the face
+    int c; // third index of vertex of the face
+    //int indices[3];
 } face_t;  // (triangle faces) Stores vertex index
 
 typedef struct

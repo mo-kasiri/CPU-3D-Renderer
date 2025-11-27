@@ -13,7 +13,7 @@ vec2_t projected_points[N_POINTS];
 
 vec3_t camera_position = {.x = 0, .y = 0, .z = -5};
 
-const float fov_scale = 640.f;
+const float fov_scale = 800.f;
 
 bool is_running = false;
 
